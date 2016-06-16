@@ -7,6 +7,7 @@ RUN apk --update add apache2 php-apache2 curl \
     php-json php-phar php-openssl php-mysql php-curl php-mcrypt php-pdo_mysql php-ctype \    
     && rm -f /var/cache/apk/* \
     && mkdir /run/apache2 \
+    && sed -i 's/#LoadModule\ rewrite_module/LoadModule\ rewrite_module/' /etc/apache2/httpd.conf \
     && mkdir -p /opt/utils \
     && sed -i 's#AllowOverride none#AllowOverride All#' /etc/apache2/httpd.conf
     
