@@ -1,7 +1,9 @@
 # alpine-apache-php
+
 A simple and slim apache/php docker image using Alpine Linux
 
 ## Build
+
 `docker build --no-cache -t [image-name]:latest .`
 
 ## Usage
@@ -15,6 +17,23 @@ Specify the web app root to a folder inside your website code, for example: publ
 #### WEBAPP_USER_ID
 
 Specify the user id which apache will use to execute its child processes, useful for development mode.
+
+#### LOG_CONF
+
+Controls log files redirection.
+
+### Log Files Redirection
+
+Log files can now be redirected to STDOUT and STDERR if needed, can be customized to redirect only access logs or only error logs, both or none.
+
+This can be done by setting the LOG_CONF environment variable, the supported values are:
+
+Value | Behavior
+----- | --------
+all | Redirect access and error logs to STDOUT and STDERR respectively
+access | Redirect access logs to STDOUT, error logs are kept inside the container
+error | Redirect error logs to STDERR, access logs are kept inside the container
+none or empty or any other value | Don't redirect any log, logs are kept inside the container
 
 ### Development mode
 

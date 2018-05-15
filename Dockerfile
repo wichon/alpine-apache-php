@@ -1,6 +1,5 @@
-FROM alpine:3.5
-MAINTAINER Luis Alonzo <wichon@gmail.com>
-LABEL Description="A Simple apache/php image using alpine Linux for Web Apps"
+FROM alpine:3.7
+LABEL Author="Luis Alonzo <wichon@gmail.com>" Description="A Simple apache/php image using alpine Linux for Web Apps"
 
 # Install gnu-libconv required by php5-iconv
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing gnu-libiconv

@@ -9,6 +9,26 @@ sed -i "s#^DocumentRoot \".*#DocumentRoot \"/app/$WEBAPP_ROOT\"#g" /etc/apache2/
 sed -i "s#/var/www/localhost/htdocs#/app/$WEBAPP_ROOT#" /etc/apache2/httpd.conf
 printf "\n<Directory \"/app/$WEBAPP_ROOT\">\n\tAllowOverride All\n</Directory>\n" >> /etc/apache2/httpd.conf
 
+# Logs redirection configuration via LOG_CONF environment variable
+case $LOG_CONF in
+    # Redirect all logs (access and errors) to stdout and stderr
+    "all")
+        ln -sf /dev/stdout /var/log/apache2/access.log
+        ln -sf /dev/stderr /var/log/apache2/error.log
+        ;;
+    # Redirect error logs stderr
+    "error")
+        ln -sf /dev/stderr /var/log/apache2/error.log
+        ;;
+    # Redirect access logs stdout
+    "access")
+        ln -sf /dev/stdout /var/log/apache2/access.log
+        ;;
+    # Default, don't redirect log files, apache logs will still be accesible inside the container
+    *)
+        ;;
+esac
+
 if [ -z "$WEBAPP_USER_ID" ]; then
     chown -R apache:apache /app
 else
